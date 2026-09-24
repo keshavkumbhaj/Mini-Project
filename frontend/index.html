@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Rozmarra — Your everyday life, organized.</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="nav-container">
+
+            <a href="#" class="logo">
+                <img src="assets/logo/Project logo.png" alt="Rozmarra Logo">
+            </a>
+
+            <nav class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How it Works</a>
+                <a href="#ai-insights">AI Insights</a>
+                <a href="#about">About</a>
+            </nav>
+
+            <a href="#get-started" class="nav-btn">
+                Get Started
+            </a>
+
+            <button class="menu-btn" id="menuBtn">
+                ☰
+            </button>
+
+        </div>
+    </header>
+
+
+    <main>
+
+        <!-- HERO -->
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <div class="eyebrow">
+                    PERSONAL MANAGEMENT, REIMAGINED
+                </div>
+
+                <h1>
+                    Your everyday life,
+                    <span>organized.</span>
+                </h1>
+
+                <p class="hero-text">
+                    Track your habits, manage your spending, stay ahead of
+                    subscriptions, and understand your everyday patterns —
+                    all from one intelligent dashboard.
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="#get-started" class="primary-btn">
+                        Get Started
+                        <span>→</span>
+                    </a>
+
+                    <a href="#features" class="secondary-btn">
+                        Explore Features
+                    </a>
+                </div>
+
+                <p class="hero-note">
+                    One place for habits, expenses, subscriptions & insights.
+                </p>
+
+            </div>
+
+
+            <!-- PRODUCT PREVIEW -->
+            <div class="product-wrapper">
+
+                <div class="browser-window">
+
+                    <div class="browser-top">
+                        <div class="browser-dots">
+                            <i></i>
+                            <i></i>
+                            <i></i>
+                        </div>
+
+                        <div class="browser-address">
+                            rozmarra.app/dashboard
+                        </div>
+                    </div>
+
+                    <div class="dashboard-preview">
+
+                        <!-- SIDEBAR -->
+                        <aside class="preview-sidebar">
+
+                            <div class="preview-logo">
+                                ROZ MARRA
+                            </div>
+
+                            <div class="preview-nav active">
+                                <span>⌂</span>
+                                Dashboard
+                            </div>
+
+                            <div class="preview-nav">
+                                <span>✓</span>
+                                Habits
+                            </div>
+
+                            <div class="preview-nav">
+                                <span>₹</span>
+                                Expenses
+                            </div>
+
+                            <div class="preview-nav">
+                                <span>◷</span>
+                                Subscriptions
+                            </div>
+
+                            <div class="preview-nav">
+                                <span>✦</span>
+                                AI Insights
+                            </div>
+
+                        </aside>
+
+
+                        <!-- DASHBOARD -->
+                        <div class="preview-main">
+
+                            <div class="preview-header">
+                                <div>
+                                    <small>Good evening, Keshav</small>
+                                    <h3>Your overview</h3>
+                                </div>
+
+                                <div class="avatar">K</div>
+                            </div>
+
+
+                            <!-- STAT CARDS -->
+                            <div class="preview-stats">
+
+                                <div class="stat-card">
+                                    <small>Habit Consistency</small>
+                                    <strong>72%</strong>
+                                    <span class="positive">
+                                        ↑ 8% this week
+                                    </span>
+                                </div>
+
+                                <div class="stat-card">
+                                    <small>Monthly Spending</small>
+                                    <strong>₹4,250</strong>
+                                    <span class="positive">
+                                        ↓ 8% vs last month
+                                    </span>
+                                </div>
+
+                                <div class="stat-card">
+                                    <small>Subscriptions</small>
+                                    <strong>₹1,299</strong>
+                                    <span>
+                                        2 renewals this week
+                                    </span>
+                                </div>
+
+                            </div>
+
+
+                            <div class="preview-grid">
+
+                                <!-- CHART -->
+                                <div class="preview-card spending-card">
+
+                                    <div class="card-heading">
+                                        <div>
+                                            <small>Spending Overview</small>
+                                            <h4>Last 30 days</h4>
+                                        </div>
+
+                                        <span class="card-menu">•••</span>
+                                    </div>
+
+                                    <div class="chart">
+                                        <div class="chart-line"></div>
+
+                                        <div class="chart-point p1"></div>
+                                        <div class="chart-point p2"></div>
+                                        <div class="chart-point p3"></div>
+                                        <div class="chart-point p4"></div>
+                                        <div class="chart-point p5"></div>
+                                        <div class="chart-point p6"></div>
+                                    </div>
+
+                                    <div class="chart-labels">
+                                        <span>Sep 1</span>
+                                        <span>Sep 8</span>
+                                        <span>Sep 15</span>
+                                        <span>Sep 22</span>
+                                    </div>
+
+                                </div>
+
+
+                                <!-- HABITS -->
+                                <div class="preview-card">
+
+                                    <div class="card-heading">
+                                        <div>
+                                            <small>Today's Progress</small>
+                                            <h4>Habits</h4>
+                                        </div>
+                                    </div>
+
+                                    <div class="habit-row">
+                                        <span>Morning Walk</span>
+                                        <b class="done">✓</b>
+                                    </div>
+
+                                    <div class="habit-row">
+                                        <span>Read 20 Pages</span>
+                                        <b class="done">✓</b>
+                                    </div>
+
+                                    <div class="habit-row">
+                                        <span>Drink 2L Water</span>
+                                        <div class="mini-progress">
+                                            <span></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="habit-row">
+                                        <span>DSA Practice</span>
+                                        <b class="done">✓</b>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- AI INSIGHT -->
+                            <div class="ai-preview">
+
+                                <div class="ai-icon">✦</div>
+
+                                <div>
+                                    <small>AI INSIGHT</small>
+                                    <p>
+                                        Your entertainment spending is
+                                        <strong>24% higher</strong> than last month.
+                                    </p>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- VALUE STRIP -->
+        <section class="value-strip">
+
+            <p>Everything you need to stay on top of everyday life.</p>
+
+            <div class="value-items">
+                <span>✓ Track habits</span>
+                <span>✓ Manage expenses</span>
+                <span>✓ Monitor subscriptions</span>
+                <span>✓ Understand patterns</span>
+            </div>
+
+        </section>
+
+
+        <!-- FEATURES -->
+        <section class="section" id="features">
+
+            <div class="section-heading">
+
+                <span class="section-label">FEATURES</span>
+
+                <h2>
+                    Everything in one place.
+                </h2>
+
+                <p>
+                    Rozmarra brings the everyday things you track
+                    into one simple personal management system.
+                </p>
+
+            </div>
+
+
+            <div class="feature-grid">
+
+                <article class="feature-card">
+
+                    <div class="feature-icon">✓</div>
+
+                    <h3>Habit Tracking</h3>
+
+                    <p>
+                        Build consistency, monitor streaks, and
+                        see your progress over time.
+                    </p>
+
+                    <a href="#">Learn more →</a>
+
+                </article>
+
+
+                <article class="feature-card">
+
+                    <div class="feature-icon money">₹</div>
+
+                    <h3>Expense Management</h3>
+
+                    <p>
+                        Track where your money goes and understand
+                        your spending patterns.
+                    </p>
+
+                    <a href="#">Learn more →</a>
+
+                </article>
+
+
+                <article class="feature-card">
+
+                    <div class="feature-icon clock">◷</div>
+
+                    <h3>Subscription Tracking</h3>
+
+                    <p>
+                        Keep recurring payments visible and stay
+                        ahead of upcoming renewals.
+                    </p>
+
+                    <a href="#">Learn more →</a>
+
+                </article>
+
+
+                <article class="feature-card">
+
+                    <div class="feature-icon ai">✦</div>
+
+                    <h3>AI Insights</h3>
+
+                    <p>
+                        Turn your personal data into useful summaries,
+                        patterns, and actionable insights.
+                    </p>
+
+                    <a href="#">Learn more →</a>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- HOW IT WORKS -->
+        <section class="section how-section" id="how-it-works">
+
+            <div class="section-heading">
+
+                <span class="section-label">HOW IT WORKS</span>
+
+                <h2>Track. Understand. Manage.</h2>
+
+                <p>
+                    A simple approach to managing the everyday.
+                </p>
+
+            </div>
+
+
+            <div class="steps">
+
+                <div class="step">
+
+                    <div class="step-number">01</div>
+
+                    <h3>Track</h3>
+
+                    <p>
+                        Capture your habits, expenses,
+                        and subscriptions.
+                    </p>
+
+                </div>
+
+
+                <div class="step-line"></div>
+
+
+                <div class="step">
+
+                    <div class="step-number">02</div>
+
+                    <h3>Understand</h3>
+
+                    <p>
+                        Bring your personal data together
+                        and identify useful patterns.
+                    </p>
+
+                </div>
+
+
+                <div class="step-line"></div>
+
+
+                <div class="step">
+
+                    <div class="step-number">03</div>
+
+                    <h3>Manage</h3>
+
+                    <p>
+                        Use those insights to make more
+                        informed everyday decisions.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- AI SECTION -->
+        <section class="ai-section" id="ai-insights">
+
+            <div class="ai-content">
+
+                <span class="section-label">INTELLIGENT INSIGHTS</span>
+
+                <h2>
+                    Your data tells a story.
+                </h2>
+
+                <p>
+                    Rozmarra doesn't just store your information.
+                    It helps you understand what's changing across
+                    your everyday life.
+                </p>
+
+            </div>
+
+
+            <div class="insight-list">
+
+                <div class="insight-card">
+
+                    <div class="insight-symbol">↗</div>
+
+                    <div>
+                        <small>SPENDING PATTERN DETECTED</small>
+
+                        <p>
+                            Entertainment spending is
+                            <strong>24% higher</strong> than last month.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="insight-card">
+
+                    <div class="insight-symbol">◷</div>
+
+                    <div>
+                        <small>SUBSCRIPTION REMINDER</small>
+
+                        <p>
+                            <strong>2 recurring payments</strong>
+                            are due this week.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="insight-card">
+
+                    <div class="insight-symbol">✓</div>
+
+                    <div>
+                        <small>HABIT TREND</small>
+
+                        <p>
+                            Your reading consistency improved
+                            compared with last week.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ABOUT -->
+        <section class="about-section" id="about">
+
+            <div>
+                <span class="section-label">ABOUT ROZ MARRA</span>
+
+                <h2>
+                    One system for the things
+                    that matter every day.
+                </h2>
+            </div>
+
+            <p>
+                Rozmarra is designed to make everyday personal
+                management simpler by bringing habits, expenses,
+                subscriptions, and intelligent insights together
+                in one place.
+            </p>
+
+        </section>
+
+
+        <!-- CTA -->
+        <section class="cta-section" id="get-started">
+
+            <div class="cta-content">
+
+                <span class="section-label">GET STARTED</span>
+
+                <h2>
+                    Make everyday management simpler.
+                </h2>
+
+                <p>
+                    Bring your habits, expenses, and subscriptions
+                    together with Rozmarra.
+                </p>
+
+                <a href="#" class="primary-btn">
+                    Get Started
+                    <span>→</span>
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <div class="footer-top">
+
+            <div>
+
+                <a href="#" class="logo">
+                    <span>ROZ</span> MARRA
+                </a>
+
+                <p>
+                    Your everyday life, organized.
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How it Works</a>
+                <a href="#ai-insights">AI Insights</a>
+                <a href="#about">About</a>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+            <span>© 2026 Rozmarra. All rights reserved.</span>
+            <span>Built for everyday life.</span>
+        </div>
+
+    </footer>
+
+
+    <script src="js/landing.js"></script>
+
+</body>
+
+</html>

@@ -1,11 +1,462 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
+    <title>Rozmarra - Dashboard</title>
+
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+
+    <script src="js/dashboard.js" defer></script>
 </head>
+
 <body>
-    
+
+<div class="app-layout">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            <a href="dashboard.html" class="logo">
+                <img src="assets/logo/Project logo.png" alt="Rozmarra Logo">
+            </a>
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="dashboard.html" class="nav-item active">
+                <span class="nav-icon">⌂</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="habits.html" class="nav-item">
+                <span class="nav-icon">✓</span>
+                <span>Habits</span>
+            </a>
+
+            <a href="expenses.html" class="nav-item">
+                <span class="nav-icon">₹</span>
+                <span>Expenses</span>
+            </a>
+
+            <a href="subscriptions.html" class="nav-item">
+                <span class="nav-icon">◷</span>
+                <span>Subscriptions</span>
+            </a>
+
+            <a href="#" class="nav-item">
+                <span class="nav-icon">✦</span>
+                <span>AI Insights</span>
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="main-content">
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <div class="breadcrumb">
+                    Rozmarra / Dashboard
+                </div>
+
+                <h1 class="topbar-title">
+                    Dashboard
+                </h1>
+
+            </div>
+
+
+            <div class="profile-avatar">
+                K
+            </div>
+
+        </header>
+
+
+        <!-- ================= PAGE CONTENT ================= -->
+
+        <div class="page-content">
+
+
+            <!-- ================= GREETING ================= -->
+
+            <section class="dashboard-intro">
+
+                <div>
+
+                    <h2 id="greeting">
+                        Good evening, Keshav
+                    </h2>
+
+                    <p id="currentDate">
+                        Here's your overview for today.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= OVERVIEW CARDS ================= -->
+
+            <section class="overview-grid">
+
+
+                <!-- Spending -->
+
+                <div class="overview-card">
+
+                    <div class="overview-card-top">
+
+                        <div>
+                            <span class="overview-label">
+                                Monthly Spending
+                            </span>
+
+                            <h3 id="monthlySpending">
+                                ₹0
+                            </h3>
+                        </div>
+
+                        <div class="overview-icon blue">
+                            ₹
+                        </div>
+
+                    </div>
+
+                    <p id="spendingStatus">
+                        No expenses recorded
+                    </p>
+
+                </div>
+
+
+                <!-- Budget -->
+
+                <div class="overview-card">
+
+                    <div class="overview-card-top">
+
+                        <div>
+                            <span class="overview-label">
+                                Remaining Budget
+                            </span>
+
+                            <h3 id="remainingBudget">
+                                —
+                            </h3>
+                        </div>
+
+                        <div class="overview-icon purple">
+                            ◴
+                        </div>
+
+                    </div>
+
+                    <div class="mini-progress">
+
+                        <div
+                            class="mini-progress-fill"
+                            id="budgetProgress"
+                        ></div>
+
+                    </div>
+
+                    <p id="budgetStatus">
+                        Set a monthly budget
+                    </p>
+
+                </div>
+
+
+                <!-- Habits -->
+
+                <div class="overview-card">
+
+                    <div class="overview-card-top">
+
+                        <div>
+                            <span class="overview-label">
+                                Habit Progress
+                            </span>
+
+                            <h3 id="habitProgress">
+                                0%
+                            </h3>
+                        </div>
+
+                        <div class="overview-icon green">
+                            ✓
+                        </div>
+
+                    </div>
+
+                    <p id="habitStatus">
+                        No habits recorded
+                    </p>
+
+                </div>
+
+
+                <!-- Subscriptions -->
+
+                <div class="overview-card">
+
+                    <div class="overview-card-top">
+
+                        <div>
+                            <span class="overview-label">
+                                Active Subscriptions
+                            </span>
+
+                            <h3 id="subscriptionCount">
+                                0
+                            </h3>
+                        </div>
+
+                        <div class="overview-icon orange">
+                            ◷
+                        </div>
+
+                    </div>
+
+                    <p id="subscriptionStatus">
+                        No active subscriptions
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= MAIN GRID ================= -->
+
+            <div class="dashboard-grid">
+
+
+                <!-- ================= SPENDING OVERVIEW ================= -->
+
+                <section class="dashboard-panel spending-panel">
+
+                    <div class="panel-heading">
+
+                        <div>
+
+                            <h3>
+                                Spending Overview
+                            </h3>
+
+                            <p>
+                                Your spending by category this month
+                            </p>
+
+                        </div>
+
+                        <a
+                            href="expenses.html"
+                            class="panel-link"
+                        >
+                            View expenses
+                        </a>
+
+                    </div>
+
+
+                    <div id="spendingOverview">
+
+                        <div class="dashboard-empty">
+                            Add expenses to see your spending overview.
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ================= TODAY'S PROGRESS ================= -->
+
+                <section class="dashboard-panel">
+
+                    <div class="panel-heading">
+
+                        <div>
+
+                            <h3>
+                                Today's Progress
+                            </h3>
+
+                            <p>
+                                Keep your day on track
+                            </p>
+
+                        </div>
+
+                        <a
+                            href="habits.html"
+                            class="panel-link"
+                        >
+                            View habits
+                        </a>
+
+                    </div>
+
+
+                    <div class="today-progress">
+
+                        <div class="today-progress-circle">
+
+                            <span id="todayPercentage">
+                                0%
+                            </span>
+
+                        </div>
+
+
+                        <div class="today-progress-info">
+
+                            <strong id="todayCompleted">
+                                0 of 0 habits completed
+                            </strong>
+
+                            <span id="todayMessage">
+                                Add habits to start tracking your progress.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="habit-list"
+                        id="todayHabitList"
+                    >
+
+                    </div>
+
+                </section>
+
+
+            </div>
+
+
+            <!-- ================= LOWER GRID ================= -->
+
+            <div class="dashboard-grid lower-grid">
+
+
+                <!-- ================= AI INSIGHT ================= -->
+
+                <section class="dashboard-panel ai-insight-panel">
+
+                    <div class="panel-heading">
+
+                        <div>
+
+                            <h3>
+                                AI Insight
+                            </h3>
+
+                            <p>
+                                A quick look at your recent activity
+                            </p>
+
+                        </div>
+
+                        <span class="ai-badge">
+                            AI
+                        </span>
+
+                    </div>
+
+
+                    <div class="ai-insight-content">
+
+                        <div class="ai-icon">
+                            ✦
+                        </div>
+
+                        <div>
+
+                            <h4 id="aiInsightTitle">
+                                Your personal insight will appear here.
+                            </h4>
+
+                            <p id="aiInsightText">
+                                As you use Rozmarra, your spending,
+                                habits and subscriptions will come
+                                together to generate useful insights.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ================= UPCOMING SUBSCRIPTIONS ================= -->
+
+                <section class="dashboard-panel">
+
+                    <div class="panel-heading">
+
+                        <div>
+
+                            <h3>
+                                Upcoming Subscriptions
+                            </h3>
+
+                            <p>
+                                Renewals coming up
+                            </p>
+
+                        </div>
+
+                        <a
+                            href="subscriptions.html"
+                            class="panel-link"
+                        >
+                            View all
+                        </a>
+
+                    </div>
+
+
+                    <div id="upcomingSubscriptions">
+
+                        <div class="dashboard-empty">
+                            No upcoming subscriptions.
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+        </div>
+
+    </main>
+
+</div>
+
 </body>
+
 </html>

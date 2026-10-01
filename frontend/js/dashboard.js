@@ -1,405 +1,876 @@
-/**
- * ROZ MARRA - Dashboard Controller
- * Lead Frontend Engineering for ROZ MARRA
- */
+/* =========================================================
+   ROZMARRA — DASHBOARD
+   ========================================================= */
 
-document.addEventListener('DOMContentLoaded', () => {
-  initLogo();
-  initHeaderGreeting();
-  initSpendingChart();
-  initHabitsInteraction();
-  initGlobalInputParser();
-  initMobileSidebar();
-});
 
-/**
- * 1. Logo fallback handler
- * Automatically prioritizes custom official logo.png if provided by the owner,
- * otherwise falls back cleanly to the geometric rozmarra-logo.svg.
- */
-function initLogo() {
-  const logoImg = document.getElementById('rozmarra-logo');
-  if (!logoImg) return;
+/* ================= STORAGE ================= */
 
-  // Attempt to check if custom logo.png exists
-  const customImg = new Image();
-  customImg.src = 'assets/logo/logo.png';
-  customImg.onload = () => {
-    logoImg.src = 'assets/logo/logo.png';
-  };
-  customImg.onerror = () => {
-    // Keep fallback rozmarra-logo.svg
-  };
-}
+const EXPENSE_STORAGE_KEY = "rozmarra_expenses";
+const BUDGET_STORAGE_KEY = "rozmarra_monthly_budget";
 
-/**
- * 2. Header dynamic greeting and current date
- */
-function initHeaderGreeting() {
-  const greetingEl = document.getElementById('user-greeting');
-  const datePillEl = document.getElementById('current-date-pill');
 
-  const now = new Date();
-  const hours = now.getHours();
+/* ================= CATEGORIES ================= */
 
-  let timeGreeting = 'Good evening';
-  if (hours < 12) {
-    timeGreeting = 'Good morning';
-  } else if (hours < 17) {
-    timeGreeting = 'Good afternoon';
-  }
-
-  if (greetingEl) {
-    greetingEl.textContent = `${timeGreeting}, Keshav`;
-  }
-
-  if (datePillEl) {
-    const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
-    datePillEl.textContent = now.toLocaleDateString('en-US', options);
-  }
-}
-
-/**
- * 3. Spending Overview Chart using Chart.js
- */
-let spendingChartInstance = null;
-
-const spendingDatasets = {
-  '7d': {
-    labels: ['Thu', 'Fri', 'Sat', 'Sun', 'Mon', 'Tue', 'Today'],
-    data: [420, 850, 1240, 960, 310, 520, 350],
-    total: '₹4,650'
-  },
-  '30d': {
-    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-    data: [3800, 4900, 4250, 3950],
-    total: '₹16,900'
-  },
-  'month': {
-    labels: ['Sep 01', 'Sep 06', 'Sep 11', 'Sep 16', 'Sep 21', 'Sep 23'],
-    data: [650, 1100, 450, 1420, 890, 350],
-    total: '₹4,860'
-  }
+const categories = {
+    Food: "#4f8bff",
+    Transport: "#14b8a6",
+    Shopping: "#8b5cf6",
+    Bills: "#f59e0b",
+    Education: "#06b6d4",
+    Entertainment: "#ec4899",
+    Health: "#22c55e",
+    Other: "#94a3b8"
 };
 
-function initSpendingChart() {
-  const ctx = document.getElementById('spendingChart');
-  if (!ctx || typeof Chart === 'undefined') return;
 
-  const chartCtx = ctx.getContext('2d');
+/* ================= DOM ================= */
 
-  // Gradient fill for area under line
-  const gradientFill = chartCtx.createLinearGradient(0, 0, 0, 200);
-  gradientFill.addColorStop(0, 'rgba(96, 224, 255, 0.22)');
-  gradientFill.addColorStop(1, 'rgba(79, 139, 255, 0.0)');
+const greeting =
+    document.getElementById("greeting");
 
-  const chartData = spendingDatasets['7d'];
+const currentDate =
+    document.getElementById("currentDate");
 
-  spendingChartInstance = new Chart(chartCtx, {
-    type: 'line',
-    data: {
-      labels: chartData.labels,
-      datasets: [{
-        label: 'Spending (₹)',
-        data: chartData.data,
-        borderColor: '#60E0FF',
-        borderWidth: 2.2,
-        tension: 0.35,
-        fill: true,
-        backgroundColor: gradientFill,
-        pointBackgroundColor: '#10151C',
-        pointBorderColor: '#60E0FF',
-        pointBorderWidth: 2,
-        pointRadius: 4,
-        pointHoverRadius: 6,
-        pointHoverBackgroundColor: '#60E0FF',
-        pointHoverBorderColor: '#FFFFFF'
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      interaction: {
-        mode: 'index',
-        intersect: false
-      },
-      plugins: {
-        legend: {
-          display: false
+const monthlySpending =
+    document.getElementById("monthlySpending");
+
+const spendingStatus =
+    document.getElementById("spendingStatus");
+
+const remainingBudget =
+    document.getElementById("remainingBudget");
+
+const budgetProgress =
+    document.getElementById("budgetProgress");
+
+const budgetStatus =
+    document.getElementById("budgetStatus");
+
+const habitProgress =
+    document.getElementById("habitProgress");
+
+const habitStatus =
+    document.getElementById("habitStatus");
+
+const subscriptionCount =
+    document.getElementById("subscriptionCount");
+
+const subscriptionStatus =
+    document.getElementById("subscriptionStatus");
+
+const spendingOverview =
+    document.getElementById("spendingOverview");
+
+const todayPercentage =
+    document.getElementById("todayPercentage");
+
+const todayCompleted =
+    document.getElementById("todayCompleted");
+
+const todayMessage =
+    document.getElementById("todayMessage");
+
+const todayHabitList =
+    document.getElementById("todayHabitList");
+
+const upcomingSubscriptions =
+    document.getElementById("upcomingSubscriptions");
+
+const aiInsightTitle =
+    document.getElementById("aiInsightTitle");
+
+const aiInsightText =
+    document.getElementById("aiInsightText");
+
+
+/* ================= HELPERS ================= */
+
+function getCurrentMonthKey() {
+
+    const now = new Date();
+
+    const year =
+        now.getFullYear();
+
+    const month =
+        String(now.getMonth() + 1)
+            .padStart(2, "0");
+
+    return `${year}-${month}`;
+
+}
+
+
+function formatCurrency(amount) {
+
+    return new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "INR",
+        maximumFractionDigits: 0
+    }).format(amount);
+
+}
+
+
+function formatDate(date) {
+
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+function escapeHTML(value) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent = value;
+
+    return div.innerHTML;
+
+}
+
+
+/* ================= DATE / GREETING ================= */
+
+function renderHeader() {
+
+    const now = new Date();
+
+    const hour =
+        now.getHours();
+
+
+    let greetingText;
+
+    if (hour < 12) {
+
+        greetingText =
+            "Good morning, Keshav";
+
+    } else if (hour < 17) {
+
+        greetingText =
+            "Good afternoon, Keshav";
+
+    } else {
+
+        greetingText =
+            "Good evening, Keshav";
+
+    }
+
+
+    greeting.textContent =
+        greetingText;
+
+
+    currentDate.textContent =
+        formatDate(now);
+
+}
+
+
+/* ================= EXPENSE DATA ================= */
+
+function loadExpenses() {
+
+    try {
+
+        const stored =
+            localStorage.getItem(
+                EXPENSE_STORAGE_KEY
+            );
+
+        return stored
+            ? JSON.parse(stored)
+            : [];
+
+    } catch (error) {
+
+        console.error(
+            "Could not load expenses:",
+            error
+        );
+
+        return [];
+
+    }
+
+}
+
+
+function loadBudget() {
+
+    try {
+
+        const stored =
+            localStorage.getItem(
+                BUDGET_STORAGE_KEY
+            );
+
+        if (!stored) {
+            return null;
+        }
+
+        const budget =
+            JSON.parse(stored);
+
+
+        if (
+            budget.month !==
+            getCurrentMonthKey()
+        ) {
+
+            return null;
+
+        }
+
+        return budget;
+
+    } catch (error) {
+
+        return null;
+
+    }
+
+}
+
+
+function getCurrentMonthExpenses() {
+
+    const expenses =
+        loadExpenses();
+
+    const month =
+        getCurrentMonthKey();
+
+
+    return expenses.filter(
+        expense =>
+            expense.date.startsWith(month)
+    );
+
+}
+
+
+function getMonthlySpending() {
+
+    return getCurrentMonthExpenses()
+        .reduce(
+            (total, expense) =>
+                total +
+                Number(expense.amount),
+            0
+        );
+
+}
+
+
+/* ================= SPENDING CARD ================= */
+
+function renderSpendingCard() {
+
+    const expenses =
+        getCurrentMonthExpenses();
+
+    const total =
+        getMonthlySpending();
+
+
+    monthlySpending.textContent =
+        formatCurrency(total);
+
+
+    if (expenses.length === 0) {
+
+        spendingStatus.textContent =
+            "No expenses recorded yet.";
+
+        return;
+    }
+
+
+    spendingStatus.textContent =
+        `${expenses.length} transaction${expenses.length === 1 ? "" : "s"} this month`;
+
+}
+
+
+/* ================= BUDGET CARD ================= */
+
+function renderBudgetCard() {
+
+    const budget =
+        loadBudget();
+
+    const spent =
+        getMonthlySpending();
+
+
+    if (!budget || !budget.amount) {
+
+        remainingBudget.textContent =
+            "—";
+
+        budgetProgress.style.width =
+            "0%";
+
+        budgetProgress.className =
+            "mini-progress-fill";
+
+        budgetStatus.textContent =
+            "Set a monthly budget";
+
+        return;
+
+    }
+
+
+    const budgetAmount =
+        Number(budget.amount);
+
+    const remaining =
+        budgetAmount - spent;
+
+    const percentage =
+        (spent / budgetAmount) * 100;
+
+
+    if (remaining >= 0) {
+
+        remainingBudget.textContent =
+            formatCurrency(remaining);
+
+    } else {
+
+        remainingBudget.textContent =
+            formatCurrency(
+                Math.abs(remaining)
+            );
+
+    }
+
+
+    budgetProgress.style.width =
+        `${Math.min(percentage, 100)}%`;
+
+    budgetProgress.className =
+        "mini-progress-fill";
+
+
+    if (percentage > 100) {
+
+        budgetProgress.classList.add(
+            "danger"
+        );
+
+        budgetStatus.textContent =
+            "Over your monthly budget";
+
+    }
+
+    else if (percentage >= 90) {
+
+        budgetProgress.classList.add(
+            "danger"
+        );
+
+        budgetStatus.textContent =
+            `${Math.round(percentage)}% of budget used`;
+
+    }
+
+    else if (percentage >= 70) {
+
+        budgetProgress.classList.add(
+            "warning"
+        );
+
+        budgetStatus.textContent =
+            `${Math.round(percentage)}% of budget used`;
+
+    }
+
+    else {
+
+        budgetStatus.textContent =
+            `${Math.round(percentage)}% of budget used`;
+
+    }
+
+}
+
+
+/* ================= SPENDING OVERVIEW ================= */
+
+function renderSpendingOverview() {
+
+    const expenses =
+        getCurrentMonthExpenses();
+
+
+    if (expenses.length === 0) {
+
+        spendingOverview.innerHTML = `
+            <div class="dashboard-empty">
+                Add expenses to see your spending overview.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    const totals = {};
+
+
+    expenses.forEach(expense => {
+
+        if (!totals[expense.category]) {
+
+            totals[expense.category] =
+                0;
+
+        }
+
+        totals[expense.category] +=
+            Number(expense.amount);
+
+    });
+
+
+    const entries =
+        Object.entries(totals)
+            .sort(
+                (a, b) =>
+                    b[1] - a[1]
+            )
+            .slice(0, 5);
+
+
+    const maximum =
+        entries[0][1];
+
+
+    spendingOverview.innerHTML =
+        entries.map(
+            ([category, amount]) => {
+
+                const percentage =
+                    (amount / maximum) * 100;
+
+                const color =
+                    categories[category]
+                    || "#94a3b8";
+
+
+                return `
+                    <div class="spending-category">
+
+                        <div class="spending-category-header">
+
+                            <span class="spending-category-name">
+                                ${escapeHTML(category)}
+                            </span>
+
+                            <span class="spending-category-amount">
+                                ${formatCurrency(amount)}
+                            </span>
+
+                        </div>
+
+                        <div class="spending-track">
+
+                            <div
+                                class="spending-fill"
+                                style="
+                                    width: ${percentage}%;
+                                    background: ${color};
+                                "
+                            ></div>
+
+                        </div>
+
+                    </div>
+                `;
+
+            }
+        ).join("");
+
+}
+
+
+/* ================= HABITS ================= */
+
+/*
+ * For now this uses demo data.
+ *
+ * Once the Habits page is connected to
+ * localStorage/backend, this function can
+ * read the real habit data.
+ */
+
+function getDemoHabits() {
+
+    return [
+
+        {
+            name: "Drink 2L Water",
+            completed: true
         },
-        tooltip: {
-          backgroundColor: '#151B23',
-          titleColor: '#F5F7FA',
-          bodyColor: '#8B95A5',
-          borderColor: '#252D38',
-          borderWidth: 1,
-          padding: 10,
-          cornerRadius: 6,
-          displayColors: false,
-          callbacks: {
-            label: function(context) {
-              return `Spent: ₹${context.parsed.y.toLocaleString('en-IN')}`;
-            }
-          }
-        }
-      },
-      scales: {
-        x: {
-          grid: {
-            color: 'rgba(37, 45, 56, 0.4)',
-            drawBorder: false
-          },
-          ticks: {
-            color: '#8B95A5',
-            font: {
-              family: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-              size: 11
-            }
-          }
+
+        {
+            name: "Read for 30 minutes",
+            completed: true
         },
-        y: {
-          beginAtZero: true,
-          grid: {
-            color: 'rgba(37, 45, 56, 0.4)',
-            drawBorder: false
-          },
-          ticks: {
-            color: '#8B95A5',
-            font: {
-              family: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-              size: 11
-            },
-            callback: function(value) {
-              return '₹' + value;
+
+        {
+            name: "Exercise",
+            completed: false
+        },
+
+        {
+            name: "Sleep before 11 PM",
+            completed: false
+        }
+
+    ];
+
+}
+
+
+function renderHabits() {
+
+    const habits =
+        getDemoHabits();
+
+
+    if (habits.length === 0) {
+
+        habitProgress.textContent =
+            "0%";
+
+        habitStatus.textContent =
+            "No habits recorded";
+
+        todayPercentage.textContent =
+            "0%";
+
+        todayCompleted.textContent =
+            "0 of 0 habits completed";
+
+        todayMessage.textContent =
+            "Add habits to start tracking your progress.";
+
+        todayHabitList.innerHTML = "";
+
+        return;
+
+    }
+
+
+    const completed =
+        habits.filter(
+            habit => habit.completed
+        ).length;
+
+
+    const percentage =
+        Math.round(
+            (completed / habits.length) *
+            100
+        );
+
+
+    habitProgress.textContent =
+        `${percentage}%`;
+
+    habitStatus.textContent =
+        `${completed} of ${habits.length} completed`;
+
+
+    todayPercentage.textContent =
+        `${percentage}%`;
+
+    todayCompleted.textContent =
+        `${completed} of ${habits.length} habits completed`;
+
+
+    if (percentage === 100) {
+
+        todayMessage.textContent =
+            "Excellent. All habits completed today.";
+
+    }
+
+    else if (percentage >= 50) {
+
+        todayMessage.textContent =
+            "You're making good progress today.";
+
+    }
+
+    else {
+
+        todayMessage.textContent =
+            "Keep going. There is still time today.";
+
+    }
+
+
+    todayHabitList.innerHTML =
+        habits.map(
+            habit => {
+
+                return `
+                    <div class="habit-row">
+
+                        <span class="habit-name">
+                            ${escapeHTML(habit.name)}
+                        </span>
+
+                        <span
+                            class="habit-check ${
+                                habit.completed
+                                    ? "completed"
+                                    : ""
+                            }"
+                        >
+                            ${
+                                habit.completed
+                                    ? "✓"
+                                    : "○"
+                            }
+                        </span>
+
+                    </div>
+                `;
+
             }
-          }
+        ).join("");
+
+}
+
+
+/* ================= SUBSCRIPTIONS ================= */
+
+/*
+ * Temporary demo data.
+ *
+ * This will later be replaced with the
+ * actual subscription data from the
+ * Subscriptions page/database.
+ */
+
+function getDemoSubscriptions() {
+
+    return [
+
+        {
+            name: "Netflix",
+            date: "2026-10-03",
+            amount: 649
+        },
+
+        {
+            name: "Spotify",
+            date: "2026-10-08",
+            amount: 119
+        },
+
+        {
+            name: "Google One",
+            date: "2026-10-15",
+            amount: 130
         }
-      }
+
+    ];
+
+}
+
+
+function renderSubscriptions() {
+
+    const subscriptions =
+        getDemoSubscriptions();
+
+
+    subscriptionCount.textContent =
+        subscriptions.length;
+
+
+    if (subscriptions.length === 0) {
+
+        subscriptionStatus.textContent =
+            "No active subscriptions";
+
+        upcomingSubscriptions.innerHTML = `
+            <div class="dashboard-empty">
+                No upcoming subscriptions.
+            </div>
+        `;
+
+        return;
+
     }
-  });
 
-  // Filter Buttons
-  const filterBtns = document.querySelectorAll('.card-filter-group .filter-btn');
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
 
-      const period = btn.dataset.period;
-      if (spendingDatasets[period] && spendingChartInstance) {
-        spendingChartInstance.data.labels = spendingDatasets[period].labels;
-        spendingChartInstance.data.datasets[0].data = spendingDatasets[period].data;
-        spendingChartInstance.update();
-      }
-    });
-  });
+    subscriptionStatus.textContent =
+        "Currently active";
+
+
+    upcomingSubscriptions.innerHTML =
+        subscriptions
+            .slice(0, 3)
+            .map(
+                subscription => {
+
+                    const date =
+                        new Date(
+                            subscription.date +
+                            "T00:00:00"
+                        );
+
+
+                    return `
+                        <div class="subscription-row">
+
+                            <div class="subscription-info">
+
+                                <div class="subscription-icon">
+                                    $
+                                </div>
+
+                                <div>
+
+                                    <div class="subscription-name">
+                                        ${escapeHTML(subscription.name)}
+                                    </div>
+
+                                    <div class="subscription-date">
+                                        ${date.toLocaleDateString(
+                                            "en-IN",
+                                            {
+                                                day: "2-digit",
+                                                month: "short"
+                                            }
+                                        )}
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="subscription-price">
+                                ${formatCurrency(
+                                    subscription.amount
+                                )}
+                            </div>
+
+                        </div>
+                    `;
+
+                }
+            )
+            .join("");
+
 }
 
-/**
- * 4. Interactive Habits Checklist & Streak progression
- */
-function initHabitsInteraction() {
-  const habitItems = document.querySelectorAll('.habit-item');
 
-  habitItems.forEach(item => {
-    const checkBtn = item.querySelector('.habit-check-btn');
-    const streakEl = item.querySelector('.habit-streak-pill');
-    const percentEl = item.querySelector('.habit-percentage');
-    const progressBar = item.querySelector('.habit-progress-bar');
+/* ================= AI INSIGHT ================= */
 
-    if (!checkBtn) return;
+function renderAIInsight() {
 
-    checkBtn.addEventListener('click', () => {
-      const isCompleted = item.classList.toggle('completed');
-      let basePercent = parseInt(item.dataset.basePercent || '70', 10);
-      let baseStreak = parseInt(item.dataset.baseStreak || '5', 10);
+    const expenses =
+        getCurrentMonthExpenses();
 
-      if (isCompleted) {
-        const newPercent = Math.min(100, basePercent + 10);
-        const newStreak = baseStreak + 1;
-        percentEl.textContent = `${newPercent}%`;
-        streakEl.textContent = `${newStreak} day streak`;
-        progressBar.style.width = `${newPercent}%`;
-        showToast(`Habit marked complete: ${item.querySelector('.habit-name').textContent}`);
-      } else {
-        percentEl.textContent = `${basePercent}%`;
-        streakEl.textContent = `${baseStreak} day streak`;
-        progressBar.style.width = `${basePercent}%`;
-      }
-    });
-  });
-}
+    const spending =
+        getMonthlySpending();
 
-/**
- * 5. Global "Add anything..." Natural Language Input Parser
- * Simulates intelligent cross-domain intent extraction
- */
-function initGlobalInputParser() {
-  const inputField = document.getElementById('global-input-field');
-  const modalBackdrop = document.getElementById('parse-modal-backdrop');
-  const modalCloseBtn = document.getElementById('modal-close-btn');
-  const modalCancelBtn = document.getElementById('modal-cancel-btn');
-  const modalConfirmBtn = document.getElementById('modal-confirm-btn');
 
-  // Parsed field displays
-  const rawInputDisplay = document.getElementById('parsed-raw-text');
-  const parsedType = document.getElementById('parsed-type');
-  const parsedAmount = document.getElementById('parsed-amount');
-  const parsedCategory = document.getElementById('parsed-category');
-  const parsedDesc = document.getElementById('parsed-desc');
-  const parsedDate = document.getElementById('parsed-date');
+    if (expenses.length === 0) {
 
-  function openParseModal(rawText) {
-    const parsed = parseInputHeuristic(rawText);
+        aiInsightTitle.textContent =
+            "Start tracking to unlock insights.";
 
-    rawInputDisplay.textContent = `"${rawText}"`;
-    parsedType.textContent = parsed.type;
-    parsedAmount.textContent = parsed.amount;
-    parsedCategory.textContent = parsed.category;
-    parsedDesc.textContent = parsed.description;
-    parsedDate.textContent = parsed.date;
+        aiInsightText.textContent =
+            "Once you add expenses and habits, Rozmarra can connect your activity and provide personalized summaries and observations.";
 
-    modalBackdrop.classList.add('active');
-  }
+        return;
 
-  function closeParseModal() {
-    modalBackdrop.classList.remove('active');
-  }
-
-  if (inputField) {
-    inputField.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        const value = inputField.value.trim();
-        if (value) {
-          openParseModal(value);
-        } else {
-          // Default demonstration query if empty
-          openParseModal('Spent ₹350 on dinner yesterday');
-        }
-      }
-    });
-  }
-
-  // Keyboard shortcut Ctrl + K or Cmd + K to focus global input
-  document.addEventListener('keydown', (e) => {
-    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
-      e.preventDefault();
-      inputField?.focus();
     }
-    if (e.key === 'Escape' && modalBackdrop.classList.contains('active')) {
-      closeParseModal();
-    }
-  });
 
-  modalCloseBtn?.addEventListener('click', closeParseModal);
-  modalCancelBtn?.addEventListener('click', closeParseModal);
 
-  modalConfirmBtn?.addEventListener('click', () => {
-    const type = parsedType.textContent;
-    const desc = parsedDesc.textContent;
-    closeParseModal();
-    if (inputField) inputField.value = '';
-    showToast(`Successfully logged ${type.toLowerCase()}: ${desc}`);
-  });
+    const categoryTotals = {};
 
-  modalBackdrop?.addEventListener('click', (e) => {
-    if (e.target === modalBackdrop) {
-      closeParseModal();
-    }
-  });
-}
 
-/**
- * Lightweight deterministic heuristic parser simulating AI extraction
- */
-function parseInputHeuristic(text) {
-  const lower = text.toLowerCase();
+    expenses.forEach(expense => {
 
-  // 1. Amount extraction (e.g. ₹350, 350 rs, 350)
-  let amount = '₹0';
-  const amountMatch = text.match(/(?:₹|rs\.?|inr\s*)?(\d+(?:,\d+)*(?:\.\d+)?)/i);
-  if (amountMatch && (lower.includes('spent') || lower.includes('paid') || lower.includes('bought') || lower.includes('₹') || lower.includes('rs'))) {
-    amount = `₹${amountMatch[1]}`;
-  }
+        categoryTotals[expense.category] =
+            (categoryTotals[expense.category] || 0) +
+            Number(expense.amount);
 
-  // 2. Date extraction
-  let date = 'Today';
-  if (lower.includes('yesterday')) {
-    const y = new Date();
-    y.setDate(y.getDate() - 1);
-    date = `Yesterday (${y.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })})`;
-  } else if (lower.includes('today')) {
-    date = 'Today';
-  }
-
-  // 3. Category & Description
-  let category = 'General';
-  let type = 'Expense';
-  let description = text;
-
-  if (lower.includes('dinner') || lower.includes('lunch') || lower.includes('food') || lower.includes('coffee') || lower.includes('burger')) {
-    category = 'Food & Dining';
-    type = 'Expense';
-    description = lower.includes('dinner') ? 'Dinner' : lower.includes('coffee') ? 'Coffee' : 'Food';
-  } else if (lower.includes('uber') || lower.includes('metro') || lower.includes('auto') || lower.includes('petrol') || lower.includes('fuel')) {
-    category = 'Transport';
-    type = 'Expense';
-    description = 'Transit / Commute';
-  } else if (lower.includes('netflix') || lower.includes('spotify') || lower.includes('movie')) {
-    category = 'Entertainment';
-    type = 'Subscription / Expense';
-    description = 'Streaming Entertainment';
-  } else if (lower.includes('gym') || lower.includes('exercise') || lower.includes('read') || lower.includes('dsa') || lower.includes('meditat')) {
-    type = 'Habit Activity';
-    category = 'Productivity & Health';
-    amount = 'N/A';
-    description = text;
-  }
-
-  return { type, amount, category, description, date };
-}
-
-/**
- * 6. Toast Notification Manager
- */
-function showToast(message) {
-  let container = document.getElementById('toast-container');
-  if (!container) {
-    container = document.createElement('div');
-    container.id = 'toast-container';
-    container.className = 'toast-container';
-    document.body.appendChild(container);
-  }
-
-  const toast = document.createElement('div');
-  toast.className = 'toast';
-  toast.innerHTML = `
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#60E0FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="20 6 9 17 4 12"></polyline>
-    </svg>
-    <span>${message}</span>
-  `;
-
-  container.appendChild(toast);
-
-  setTimeout(() => {
-    toast.style.opacity = '0';
-    toast.style.transform = 'translateY(10px)';
-    toast.style.transition = 'all 0.3s ease';
-    setTimeout(() => toast.remove(), 300);
-  }, 3200);
-}
-
-/**
- * 7. Mobile Sidebar Drawer Toggle
- */
-function initMobileSidebar() {
-  const toggleBtn = document.getElementById('mobile-menu-toggle');
-  const sidebar = document.querySelector('.sidebar');
-
-  if (toggleBtn && sidebar) {
-    toggleBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('mobile-open');
     });
-  }
+
+
+    const topCategory =
+        Object.entries(categoryTotals)
+            .sort(
+                (a, b) =>
+                    b[1] - a[1]
+            )[0];
+
+
+    if (!topCategory) {
+        return;
+    }
+
+
+    aiInsightTitle.textContent =
+        `${topCategory[0]} is your highest spending category this month.`;
+
+
+    aiInsightText.textContent =
+        `You've spent ${formatCurrency(
+            topCategory[1]
+        )} on ${topCategory[0]} so far, out of ${formatCurrency(
+            spending
+        )} in total monthly expenses.`;
+
 }
+
+
+/* ================= RENDER ================= */
+
+function renderDashboard() {
+
+    renderHeader();
+
+    renderSpendingCard();
+
+    renderBudgetCard();
+
+    renderSpendingOverview();
+
+    renderHabits();
+
+    renderSubscriptions();
+
+    renderAIInsight();
+
+}
+
+
+/* ================= INITIAL LOAD ================= */
+
+renderDashboard();

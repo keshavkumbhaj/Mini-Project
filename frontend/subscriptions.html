@@ -1,100 +1,682 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ROZ MARRA — Subscriptions</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Rozmarra - Subscription Tracker</title>
+
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/subscriptions.css">
+
+    <script src="js/subscriptions.js" defer></script>
 </head>
+
 <body>
-  <div class="app-container">
-    <aside class="sidebar">
-      <div class="sidebar-header">
-        <div class="brand-wrapper">
-          <img src="assets/logo/rozmarra-logo.svg" alt="ROZ MARRA" class="brand-logo-img">
-        </div>
-      </div>
-      <nav class="sidebar-nav">
-        <div class="nav-section">
-          <span class="nav-section-title">Main</span>
-          <a href="index.html" class="nav-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <rect x="3" y="3" width="7" height="7" rx="1"></rect>
-              <rect x="14" y="3" width="7" height="7" rx="1"></rect>
-              <rect x="14" y="14" width="7" height="7" rx="1"></rect>
-              <rect x="3" y="14" width="7" height="7" rx="1"></rect>
-            </svg>
-            <span>Dashboard</span>
-          </a>
-          <a href="habits.html" class="nav-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <path d="M9 11l3 3L22 4"></path>
-              <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-            </svg>
-            <span>Habits</span>
-            <span class="nav-badge">4</span>
-          </a>
-          <a href="expenses.html" class="nav-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <line x1="12" y1="1" x2="12" y2="23"></line>
-              <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"></path>
-            </svg>
-            <span>Expenses</span>
-          </a>
-          <a href="subscriptions.html" class="nav-item active">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <rect x="2" y="5" width="20" height="14" rx="2"></rect>
-              <line x1="2" y1="10" x2="22" y2="10"></line>
-            </svg>
-            <span>Subscriptions</span>
-            <span class="nav-badge">3</span>
-          </a>
-        </div>
-        <div class="nav-section">
-          <span class="nav-section-title">Insights</span>
-          <a href="index.html#ai-insights" class="nav-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-            </svg>
-            <span>AI Insights</span>
-            <span class="nav-badge accent">Live</span>
-          </a>
-        </div>
-      </nav>
-      <div class="sidebar-footer">
-        <div class="user-profile">
-          <div class="user-avatar">KW</div>
-          <div class="user-info">
-            <span class="user-name">Keshav</span>
-            <span class="user-role">Web Weavers</span>
-          </div>
-        </div>
-      </div>
-    </aside>
 
-    <main class="main-viewport">
-      <header class="top-header">
-        <div class="page-welcome" style="margin-bottom: 0;">
-          <h2 class="card-title" style="font-size: 17px;">Subscriptions Management</h2>
-        </div>
-        <div class="header-actions">
-          <a href="index.html" class="btn-secondary">← Back to Dashboard</a>
-        </div>
-      </header>
+    <div class="app-layout">
 
-      <div class="content-scrollable">
-        <div class="dashboard-card" style="text-align: center; padding: 48px 24px;">
-          <div class="insight-badge" style="margin: 0 auto 16px;">Core Module 4</div>
-          <h2 class="card-title" style="font-size: 20px; margin-bottom: 8px;">Subscription Tracking & Renewals</h2>
-          <p class="card-subtitle" style="max-width: 500px; margin: 0 auto 24px; font-size: 13.5px; line-height: 1.6;">
-            Recurring fee tracking (₹1,299/mo), renewal calendar notifications, billing cycle management, and upcoming charges will be connected in Phase 4.
-          </p>
-          <div>
-            <a href="index.html" class="btn-primary">Return to Overview Dashboard</a>
-          </div>
-        </div>
-      </div>
-    </main>
-  </div>
+        <!-- ================= SIDEBAR ================= -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-logo">
+                <a href="dashboard.html" class="logo">
+                    <img src="assets/logo/Project logo.png" alt="Rozmarra Logo">
+                </a>
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <a href="dashboard.html" class="nav-item">
+                    <span class="nav-icon">⌂</span>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="habits.html" class="nav-item">
+                    <span class="nav-icon">✓</span>
+                    <span>Habits</span>
+                </a>
+
+                <a href="expenses.html" class="nav-item">
+                    <span class="nav-icon">₹</span>
+                    <span>Expenses</span>
+                </a>
+
+                <a href="subscriptions.html" class="nav-item active">
+                    <span class="nav-icon">◷</span>
+                    <span>Subscriptions</span>
+                </a>
+
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">✦</span>
+                    <span>AI Insights</span>
+                </a>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- ================= MAIN CONTENT ================= -->
+
+        <main class="main-content">
+
+            <!-- TOP BAR -->
+
+            <header class="topbar">
+
+                <div>
+
+                    <div class="breadcrumb">
+                        Rozmarra / Subscriptions
+                    </div>
+
+                    <h1 class="topbar-title">
+                        Subscription Tracker
+                    </h1>
+
+                </div>
+
+                <div class="profile-avatar">
+                    K
+                </div>
+
+            </header>
+
+
+            <!-- ================= PAGE CONTENT ================= -->
+
+            <div class="page-content">
+
+
+                <!-- PAGE INTRO -->
+
+                <div class="page-intro">
+
+                    <div>
+
+                        <h2>
+                            Manage your subscriptions
+                        </h2>
+
+                        <p>
+                            Keep track of your recurring payments and renewals.
+                        </p>
+
+                    </div>
+
+                    <button
+                        class="add-subscription-btn"
+                        id="openSubscriptionForm"
+                    >
+                        <span>+</span>
+                        Add Subscription
+                    </button>
+
+                </div>
+
+
+                <!-- ================= SUMMARY CARDS ================= -->
+
+                <div class="summary-grid">
+
+
+                    <!-- MONTHLY COST -->
+
+                    <div class="summary-card">
+
+                        <div class="summary-top">
+
+                            <span class="summary-label">
+                                Monthly Cost
+                            </span>
+
+                            <div class="summary-icon blue">
+                                ₹
+                            </div>
+
+                        </div>
+
+                        <div
+                            class="summary-value"
+                            id="monthlyCost"
+                        >
+                            ₹0.00
+                        </div>
+
+                        <div class="summary-description">
+                            Recurring every month
+                        </div>
+
+                    </div>
+
+
+                    <!-- ACTIVE SUBSCRIPTIONS -->
+
+                    <div class="summary-card">
+
+                        <div class="summary-top">
+
+                            <span class="summary-label">
+                                Active Subscriptions
+                            </span>
+
+                            <div class="summary-icon purple">
+                                ▤
+                            </div>
+
+                        </div>
+
+                        <div
+                            class="summary-value"
+                            id="subscriptionCount"
+                        >
+                            0
+                        </div>
+
+                        <div class="summary-description">
+                            Currently tracked
+                        </div>
+
+                    </div>
+
+
+                    <!-- YEARLY COST -->
+
+                    <div class="summary-card">
+
+                        <div class="summary-top">
+
+                            <span class="summary-label">
+                                Yearly Cost
+                            </span>
+
+                            <div class="summary-icon green">
+                                ↗
+                            </div>
+
+                        </div>
+
+                        <div
+                            class="summary-value"
+                            id="yearlyCost"
+                        >
+                            ₹0.00
+                        </div>
+
+                        <div class="summary-description">
+                            Estimated annual spending
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= ANALYTICS ================= -->
+
+                <div class="analytics-grid">
+
+
+                    <!-- UPCOMING RENEWALS -->
+
+                    <section class="panel upcoming-panel">
+
+                        <div class="panel-heading">
+
+                            <div>
+
+                                <h3>
+                                    Upcoming Renewals
+                                </h3>
+
+                                <p>
+                                    Your next subscription payments
+                                </p>
+
+                            </div>
+
+                            <span class="panel-period">
+                                Upcoming
+                            </span>
+
+                        </div>
+
+
+                        <div id="upcomingRenewals">
+
+                            <div class="empty-state">
+                                No subscriptions added yet.
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- CATEGORY BREAKDOWN -->
+
+                    <section class="panel category-panel">
+
+                        <div class="panel-heading">
+
+                            <div>
+
+                                <h3>
+                                    Subscription Categories
+                                </h3>
+
+                                <p>
+                                    Your subscriptions by category
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div id="categoryBreakdown">
+
+                            <div class="empty-state">
+                                No subscriptions added yet.
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+
+                <!-- ================= ADD SUBSCRIPTION FORM ================= -->
+
+                <section
+                    class="panel subscription-form-panel"
+                    id="subscriptionFormPanel"
+                >
+
+                    <div class="panel-heading">
+
+                        <div>
+
+                            <h3>
+                                Add Subscription
+                            </h3>
+
+                            <p>
+                                Add a recurring payment to your tracker.
+                            </p>
+
+                        </div>
+
+                        <button
+                            class="close-form"
+                            id="closeSubscriptionForm"
+                            type="button"
+                        >
+                            ×
+                        </button>
+
+                    </div>
+
+
+                    <form id="subscriptionForm">
+
+                        <div class="form-grid">
+
+
+                            <!-- SERVICE NAME -->
+
+                            <div class="form-group">
+
+                                <label
+                                    class="form-label"
+                                    for="subscriptionName"
+                                >
+                                    Service Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="subscriptionName"
+                                    class="form-input"
+                                    placeholder="e.g. Netflix"
+                                    maxlength="60"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <!-- AMOUNT -->
+
+                            <div class="form-group">
+
+                                <label
+                                    class="form-label"
+                                    for="subscriptionAmount"
+                                >
+                                    Amount
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="subscriptionAmount"
+                                    class="form-input"
+                                    placeholder="₹0"
+                                    min="1"
+                                    step="0.01"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <!-- BILLING CYCLE -->
+
+                            <div class="form-group">
+
+                                <label
+                                    class="form-label"
+                                    for="billingCycle"
+                                >
+                                    Billing Cycle
+                                </label>
+
+                                <select
+                                    id="billingCycle"
+                                    class="form-select"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Select billing cycle
+                                    </option>
+
+                                    <option value="monthly">
+                                        Monthly
+                                    </option>
+
+                                    <option value="yearly">
+                                        Yearly
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- CATEGORY -->
+
+                            <div class="form-group">
+
+                                <label
+                                    class="form-label"
+                                    for="subscriptionCategory"
+                                >
+                                    Category
+                                </label>
+
+                                <select
+                                    id="subscriptionCategory"
+                                    class="form-select"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Select category
+                                    </option>
+
+                                    <option value="Entertainment">
+                                        Entertainment
+                                    </option>
+
+                                    <option value="Education">
+                                        Education
+                                    </option>
+
+                                    <option value="Productivity">
+                                        Productivity
+                                    </option>
+
+                                    <option value="Software">
+                                        Software
+                                    </option>
+
+                                    <option value="Cloud Storage">
+                                        Cloud Storage
+                                    </option>
+
+                                    <option value="Gaming">
+                                        Gaming
+                                    </option>
+
+                                    <option value="News">
+                                        News
+                                    </option>
+
+                                    <option value="Other">
+                                        Other
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- NEXT BILLING DATE -->
+
+                            <div class="form-group">
+
+                                <label
+                                    class="form-label"
+                                    for="nextBillingDate"
+                                >
+                                    Next Billing Date
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="nextBillingDate"
+                                    class="form-input"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <!-- NOTE -->
+
+                            <div class="form-group">
+
+                                <label
+                                    class="form-label"
+                                    for="subscriptionNote"
+                                >
+                                    Note
+                                    <span class="optional-label">
+                                        Optional
+                                    </span>
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="subscriptionNote"
+                                    class="form-input"
+                                    placeholder="Any extra information..."
+                                    maxlength="200"
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-actions">
+
+                            <button
+                                type="button"
+                                class="cancel-btn"
+                                id="cancelSubscription"
+                            >
+                                Cancel
+                            </button>
+
+                            <button
+                                type="submit"
+                                class="save-btn"
+                            >
+                                Save Subscription
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </section>
+
+
+                <!-- ================= ALL SUBSCRIPTIONS ================= -->
+
+                <section class="panel subscriptions-list-panel">
+
+                    <div class="panel-heading">
+
+                        <div>
+
+                            <h3>
+                                Your Subscriptions
+                            </h3>
+
+                            <p>
+                                All your recurring payments
+                            </p>
+
+                        </div>
+
+
+                        <div class="filters">
+
+                            <input
+                                type="text"
+                                id="searchSubscriptions"
+                                class="form-input search-input"
+                                placeholder="Search subscriptions..."
+                            >
+
+
+                            <select
+                                id="categoryFilter"
+                                class="form-select filter-select"
+                            >
+
+                                <option value="all">
+                                    All Categories
+                                </option>
+
+                                <option value="Entertainment">
+                                    Entertainment
+                                </option>
+
+                                <option value="Education">
+                                    Education
+                                </option>
+
+                                <option value="Productivity">
+                                    Productivity
+                                </option>
+
+                                <option value="Software">
+                                    Software
+                                </option>
+
+                                <option value="Cloud Storage">
+                                    Cloud Storage
+                                </option>
+
+                                <option value="Gaming">
+                                    Gaming
+                                </option>
+
+                                <option value="News">
+                                    News
+                                </option>
+
+                                <option value="Other">
+                                    Other
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="table-wrapper">
+
+                        <table class="subscription-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Subscription
+                                    </th>
+
+                                    <th>
+                                        Category
+                                    </th>
+
+                                    <th>
+                                        Billing
+                                    </th>
+
+                                    <th>
+                                        Next Billing
+                                    </th>
+
+                                    <th>
+                                        Amount
+                                    </th>
+
+                                    <th></th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="subscriptionTableBody">
+
+                                <tr>
+
+                                    <td
+                                        colspan="6"
+                                        class="empty-table"
+                                    >
+                                        No subscriptions added yet.
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
 </body>
+
 </html>
